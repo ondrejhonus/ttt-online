@@ -1,0 +1,97 @@
+html{
+    height: 100%;
+}
+body {
+    background-color: #f8f9fa;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+div.modes{
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3vh;
+}
+
+
+
+div.mode {
+    background-color: black;
+    cursor: pointer;
+    text-align: center;
+    color: #aff;
+    border-radius: 15px;
+    width: 40vh;
+    margin: 2em;
+    padding: .5em;
+}
+
+div.mode:hover {
+    background-color: black; 
+    border: solid grey 2px;
+}
+.title {
+    text-align: center;
+    font-size: xx-large;
+    margin-top: 5vh;
+}
+.disabled{
+    color: rgb(228, 102, 102);
+    margin-top: 0;
+}
+div.tictactoe{
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    height: 120px;
+}
+h1{
+    height: min-content !important;
+    width: min-content;
+    margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+    div.modes{
+        flex-direction: column;
+    }
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    opacity: 0.8;
+}
+
+div.icons{
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5vh;
+    border-radius: 8px 8px 0 0;
+    background-color: #b3b3b3;
+    width: 22vh;
+    margin: auto;
+}
+    
+
+div.icons img{
+    width: 15px;
+    background-color: #b3b3b3;
+    border-radius: 100%;
+    vertical-align: middle;
+    margin: 0 5px;
+}
