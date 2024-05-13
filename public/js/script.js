@@ -2,6 +2,39 @@ const socket = io();
 let xo = "X";
 let winner = null;
 
+///////////////////////////////////////////////////
+////////////////// CHAT LOGIC //////////////////////
+///////////////////////////////////////////////////
+
+var messages = document.getElementById('messages');
+var form = document.getElementById('form');
+var input = document.getElementById('input');
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  if (input.value) {
+    socket.emit('chat message', input.value);
+    input.value = '';
+  }
+});
+
+socket.on('chat message', function(msg) {
+  var item = document.createElement('p');
+  item.classList.add("msg")
+  item.textContent = msg;
+  messages.appendChild(item);
+});
+
+///////////////////////////////////////////////////
+////////////////// GAME LOGIC //////////////////////
+/////////////////////////////////////////////////// 
+
+
+
+function onlineJoin() {
+  window.location.replace("./game");
+}
+
 function fillPlayfield() {
   let playfield = document.querySelector(".playfield");
 
@@ -23,7 +56,7 @@ function fillPlayfield() {
 fillPlayfield();
 
 checkWinner = () => {
-  const cells = document.querySelectorAll(".cell");
+  const cells = document.querySelectorAll("div.cell");
   const winningCombos = [
     // row
     [0, 1, 2],
@@ -66,7 +99,7 @@ document.querySelectorAll(".cell").forEach((cell) => {
       const column = parseInt(this.dataset.column);
       this.innerHTML = '<p class="cell">' + "X" + "</p>";
       xo = xo === "X" ? "O" : "X";
-      socket.emit("play move", { row, column, xo });
+      socket.emit("play move", { row, column});
     }
   checkWinner();
 
@@ -74,7 +107,7 @@ document.querySelectorAll(".cell").forEach((cell) => {
 });
 
 socket.on("play move", (data) => {
-  const { row, column, xo } = data;
+  const { row, column} = data;
   const cell = document.querySelector(
     `.row[data-row='${row}'] .cell[data-column='${column}']`
   );

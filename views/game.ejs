@@ -3,24 +3,36 @@
     <head>
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>Playing</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/game.css">
     </head>
     <body>
+        <header>
+
+            <div class="container chatbox">
+                <div class="wrapper">
+                    <div class="main">
+                        <div class="scroll">
+                            <div id="messages">
+                            </div>
+                            <form id="form" action>
+                                <input id="input" type="text number" name="text"
+                                    class="form-control"
+                                    placeholder="Type a message..."><button class="send">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </header>
         <main>
             <h1 class="winner"></h1>
             <div class="playfield"></div>
+                <script src="/socket.io/socket.io.js"></script>
+                <script src="js/script.js"></script>
 
-
-
-        <!--
-                <ul id="messages"></ul>
-            <form id="form" action>
-                <input id="input" autocomplete="off"/><button>Send</button>
-            </form>
-        -->
-        </main>
-        
-        <script src="/socket.io/socket.io.js"></script>
-  <script src="js/script.js"></script>
-    </body>
-</html>
+            </main>
+        </body>
+    </html>
