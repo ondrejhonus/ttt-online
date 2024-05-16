@@ -1,38 +1,37 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <title>Playing</title>
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/game.css">
-    </head>
-    <body>
-        <header>
+<html data-theme="dark">
 
-            <div class="container chatbox">
-                <div class="wrapper">
-                    <div class="main">
-                        <div class="scroll">
-                            <div id="messages">
-                            </div>
-                            <form id="form" action>
-                                <input id="input" type="text number" name="text"
-                                    class="form-control"
-                                    placeholder="Type a message..."><button class="send">Send</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Playing</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link rel="stylesheet" href="css/game.css">
+</head>
+
+<body>
+    <header>
+        <div class="box chatbox has-background-black-ter">
+            <div class="scroll">
+                <div id="messages"></div>
+                <form id="form" action>
+                    <input id="input" type="text number" class="input is-normal" placeholder="Type a message...">
+                    <button class="button send">Send</button>
+                </form>
             </div>
+        </div>
+    </header>
+    <main>
+        <h1 class="status-win winner is-size-1 has-text-success has-text-weight-bold"></h1>
+        <h1 class="status-win loser is-size-1 has-text-danger has-text-weight-bold"></h1>
+        <h1 class="status-win draw is-size-1 has-text-warning has-text-weight-bold"></h1>
+        <div class="playfield"></div>
+        <div class="chatToggle">
+            <button class="button is-info is-medium chatToggleButton">Chat</button>
+        </div>
 
-        </header>
-        <main>
-            <h1 class="winner"></h1>
-            <div class="playfield"></div>
-                <script src="/socket.io/socket.io.js"></script>
-                <script src="js/script.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="js/script.js"></script>
+    </main>
+</body>
 
-            </main>
-        </body>
-    </html>
+</html>

@@ -1,85 +1,4 @@
-::-webkit-scrollbar {
-      width: 10px
-  }
-  
-  ::-webkit-scrollbar-track {
-      background: #333
-  }
-  
-  ::-webkit-scrollbar-thumb {
-      background: #888
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-      background: #555
-  }
-  
-  .main {
-      background-color: #333;
-      width: 320px;
-      position: relative;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-      padding: 6px 0px 0px 0px
-  }
-  
-  .scroll {
-      overflow-y: scroll;
-      scroll-behavior: smooth;
-      height: 325px
-  }
-  
-  .img1 {
-      border-radius: 50%;
-      background-color: #66BB6A
-  }
-  
-  .name {
-      font-size: 8px
-  }
-  
-  .msg {
-      background-color: #777;
-      font-size: 11px;
-      padding: 5px;
-      border-radius: 5px;
-      font-weight: 500;
-      color: #fff
-  }
-  
-  .form-control {
-      font-size: 12px;
-      font-weight: 400;
-      width: 230px;
-      height: 30px;
-      border: none
-  }
-  input#input{
-    position: absolute;
-    bottom: 0;
-  }
-  button.send{
-    text-align: center;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    padding: 6px 25px;
-  }
-  div.chatbox{
-    position: fixed;
-    height: 100%;
-  }
-
-  body {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    color: black !important;
-}
-div.chat{
-
-    background-color: #333;
-}
-div.playfield{
+div.playfield {
     display: flex;
     flex-wrap: wrap;
     margin: auto;
@@ -87,19 +6,97 @@ div.playfield{
     justify-content: center;
     vertical-align: middle;
     text-align: center;
-    
+    width: 100%;
+    margin-top: 10em;
 }
-div.cell{
-    border: solid 1px #333;
+
+.status-win{
+    position: absolute;
+    width: 100%;
+    top: 0;
     text-align: center;
-    width: 10em;
-    height: 10em;
+    margin-top: 1em;
+}
+
+div.cell {
+    border: solid 2px #bdbdbd;
+    text-align: center;
+    width: 15vh;
+    height: 15vh;
     display: flex;
     align-items: center;
     justify-content: center;
     vertical-align: middle;
 }
-p.cell{
-    font-size: 5em;
+
+p.cell {
+    font-size: 10vh;
     margin: 0;
+}
+
+div.chatbox {
+    width: 21em;
+    height: 26em;
+    left: 0;
+    bottom: 7%;
+    z-index: 1;
+    position: absolute;
+    margin: .5em;
+    visibility: hidden;
+}
+
+div.chatToggle{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin: .5em;
+}
+
+.scroll {
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    height: 95%;
+}
+
+.msg {
+    color: #000;
+    border: 2px black solid;
+    width: fit-content;
+    border-radius: 100px;
+    padding: 1px 10px;
+    margin: 5px;
+    max-width: 200px;
+    overflow-wrap: break-word;
+}
+
+input#input {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 15em;
+}
+
+button.send {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 6em;
+}
+
+
+
+::-webkit-scrollbar {
+    width: 10px
+}
+
+::-webkit-scrollbar-track {
+    background: hsl(0, 0, 14%)
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555
 }

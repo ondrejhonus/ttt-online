@@ -24,12 +24,12 @@ app.get('/game', (req, res) => {
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('play move', (data) => {
-  console.log('play move:', data);
-  socket.broadcast.emit('play move', data);
+    console.log('play move:', data);
+    socket.broadcast.emit('play move', data);
   });
-    socket.on('chat message', (msg) => {
-      io.emit('chat message', msg);
-    });
+  socket.on('chat message out', (msg) => {
+    socket.broadcast.emit('chat message in', msg);
+  });
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });

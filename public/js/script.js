@@ -1,39 +1,72 @@
 const socket = io();
 let xo = "X";
 let winner = null;
+let endOfGame = false;
 
 ///////////////////////////////////////////////////
 ////////////////// CHAT LOGIC //////////////////////
 ///////////////////////////////////////////////////
 
-var messages = document.getElementById('messages');
-var form = document.getElementById('form');
-var input = document.getElementById('input');
+var messages = document.getElementById("messages");
+var form = document.getElementById("form");
+var input = document.getElementById("input");
 
-form.addEventListener('submit', function(e) {
+form.addEventListener("submit", function (e) {
   e.preventDefault();
   if (input.value) {
-    socket.emit('chat message', input.value);
-    input.value = '';
+    var item = document.createElement("p");
+    var chatboxScroll = document.querySelector(".scroll");
+    socket.emit("chat message out", input.value);
+    item.classList.add("msg", "has-background-info", "is-size-6", "outgoing-message");
+    item.textContent = input.value;
+    messages.appendChild(item);
+    chatboxScroll.scrollTop = chatboxScroll.scrollHeight;
+    input.value = "";
   }
 });
 
-socket.on('chat message', function(msg) {
-  var item = document.createElement('p');
-  item.classList.add("msg")
+socket.on("chat message in", function (msg) {
+  var item = document.createElement("p");
+  var chatboxScroll = document.querySelector(".scroll");
+  item.classList.add("msg", "has-background-danger", "is-size-6", "incoming-message");
   item.textContent = msg;
   messages.appendChild(item);
+  chatboxScroll.scrollTop = chatboxScroll.scrollHeight;
+});
+
+///////////////////////////////////////////////////
+////////////////// CHAT TOGGLE ////////////////////
+///////////////////////////////////////////////////
+
+toggleButton = document.querySelector(".chatToggleButton");
+let chatToggled = false;
+
+toggleButton.addEventListener("click", function () {
+  chatbox = document.querySelector(".chatbox");
+  switch (chatToggled) {
+    case true:
+      chatbox.style.visibility = "hidden";
+      chatToggled = !chatToggled;
+      break;
+    case false:
+      chatbox.style.visibility = "visible";
+      chatToggled = !chatToggled;
+      break;
+  }
 });
 
 ///////////////////////////////////////////////////
 ////////////////// GAME LOGIC //////////////////////
-/////////////////////////////////////////////////// 
+///////////////////////////////////////////////////
 
 
+// Redirect user to playing the game
 
 function onlineJoin() {
   window.location.replace("./game");
 }
+
+// Draw the playfield 
 
 function fillPlayfield() {
   let playfield = document.querySelector(".playfield");
@@ -42,10 +75,9 @@ function fillPlayfield() {
     let row = document.createElement("div");
     row.classList.add("row");
     row.dataset.row = i;
-
     for (let j = 0; j < 3; j++) {
       let cell = document.createElement("div");
-      cell.classList.add("cell");
+      cell.classList.add("cell", "has-background-black-ter", "has-text-white");
       cell.innerHTML = "";
       cell.dataset.column = j;
       row.appendChild(cell);
@@ -54,6 +86,9 @@ function fillPlayfield() {
   }
 }
 fillPlayfield();
+
+
+// Check for winner
 
 checkWinner = () => {
   const cells = document.querySelectorAll("div.cell");
@@ -74,23 +109,44 @@ checkWinner = () => {
   for (let i = 0; i < winningCombos.length; i++) {
     let [a, b, c] = winningCombos[i];
     if (
-      cells[a].textContent === "X" && 
+      cells[a].textContent === "X" &&
       cells[b].textContent === "X" &&
       cells[c].textContent === "X"
     ) {
       document.querySelector(".winner").innerHTML = "You won!";
-      return;
+      endOfGame = true;
+      break;
     }
-    if (
+    else if (
       cells[a].textContent === "O" &&
       cells[b].textContent === "O" &&
       cells[c].textContent === "O"
     ) {
-      document.querySelector(".winner").innerHTML = "You lost!";
-      return;
+      document.querySelector(".loser").innerHTML = "You lost!";
+      endOfGame = true;
+      break;
+    }
+    else if(
+    (cells[0].textContent === "X" || cells[0].textContent === "O") &&
+    (cells[1].textContent === "X" || cells[1].textContent === "O") &&
+    (cells[2].textContent === "X" || cells[2].textContent === "O") &&
+    (cells[3].textContent === "X" || cells[3].textContent === "O") &&
+    (cells[4].textContent === "X" || cells[4].textContent === "O") &&
+    (cells[5].textContent === "X" || cells[5].textContent === "O") &&
+    (cells[6].textContent === "X" || cells[6].textContent === "O") &&
+    (cells[7].textContent === "X" || cells[7].textContent === "O")){
+      document.querySelector(".draw").innerHTML = "It's a tie!";
+      endOfGame = true;
     }
   }
+  if(endOfGame){
+    setTimeout(() => {
+      window.location.replace("../");
+    }, 3000);
+  }
 };
+
+// Draw an X for local player
 
 document.querySelectorAll(".cell").forEach((cell) => {
   cell.addEventListener("click", function () {
@@ -99,20 +155,19 @@ document.querySelectorAll(".cell").forEach((cell) => {
       const column = parseInt(this.dataset.column);
       this.innerHTML = '<p class="cell">' + "X" + "</p>";
       xo = xo === "X" ? "O" : "X";
-      socket.emit("play move", { row, column});
+      socket.emit("play move", { row, column });
     }
-  checkWinner();
-
+    checkWinner();
   });
 });
 
+// Get the move from the other player and draw an O
+
 socket.on("play move", (data) => {
-  const { row, column} = data;
+  const { row, column } = data;
   const cell = document.querySelector(
     `.row[data-row='${row}'] .cell[data-column='${column}']`
   );
   cell.innerHTML = '<p class="cell">' + "O" + "</p>";
   checkWinner();
 });
-checkWinner();
-
