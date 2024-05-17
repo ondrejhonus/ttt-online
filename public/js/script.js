@@ -7,15 +7,15 @@ let endOfGame = false;
 ////////////////// CHAT LOGIC //////////////////////
 ///////////////////////////////////////////////////
 
-var messages = document.getElementById("messages");
-var form = document.getElementById("form");
-var input = document.getElementById("input");
+let messages = document.getElementById("messages");
+let form = document.getElementById("form");
+let input = document.getElementById("input");
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   if (input.value) {
-    var item = document.createElement("p");
-    var chatboxScroll = document.querySelector(".scroll");
+    let item = document.createElement("p");
+    let chatboxScroll = document.querySelector(".scroll");
     socket.emit("chat message out", input.value);
     item.classList.add("msg", "has-background-info", "is-size-6", "outgoing-message");
     item.textContent = input.value;
@@ -26,8 +26,8 @@ form.addEventListener("submit", function (e) {
 });
 
 socket.on("chat message in", function (msg) {
-  var item = document.createElement("p");
-  var chatboxScroll = document.querySelector(".scroll");
+  let item = document.createElement("p");
+  let chatboxScroll = document.querySelector(".scroll");
   item.classList.add("msg", "has-background-danger", "is-size-6", "incoming-message");
   item.textContent = msg;
   messages.appendChild(item);
