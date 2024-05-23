@@ -1,5 +1,4 @@
 const socket = io();
-let xo = "X";
 let winner = null;
 let endOfGame = false;
 
@@ -126,20 +125,25 @@ checkWinner = () => {
       endOfGame = true;
       break;
     }
-    else if(
-    (cells[0].textContent === "X" || cells[0].textContent === "O") &&
-    (cells[1].textContent === "X" || cells[1].textContent === "O") &&
-    (cells[2].textContent === "X" || cells[2].textContent === "O") &&
-    (cells[3].textContent === "X" || cells[3].textContent === "O") &&
-    (cells[4].textContent === "X" || cells[4].textContent === "O") &&
-    (cells[5].textContent === "X" || cells[5].textContent === "O") &&
-    (cells[6].textContent === "X" || cells[6].textContent === "O") &&
-    (cells[7].textContent === "X" || cells[7].textContent === "O")){
+    else if (
+      (cells[0].textContent === "X" || cells[0].textContent === "O") &&
+      (cells[1].textContent === "X" || cells[1].textContent === "O") &&
+      (cells[2].textContent === "X" || cells[2].textContent === "O") &&
+      (cells[3].textContent === "X" || cells[3].textContent === "O") &&
+      (cells[4].textContent === "X" || cells[4].textContent === "O") &&
+      (cells[5].textContent === "X" || cells[5].textContent === "O") &&
+      (cells[6].textContent === "X" || cells[6].textContent === "O") &&
+      (cells[7].textContent === "X" || cells[7].textContent === "O") &&
+      (cells[8].textContent === "X" || cells[8].textContent === "O")
+    ) {
       document.querySelector(".draw").innerHTML = "It's a tie!";
       endOfGame = true;
     }
   }
-  if(endOfGame){
+  if (endOfGame) {
+    document.querySelectorAll(".cell").forEach((cell) => {
+      cell.style.visibility = "hidden";
+    });
     setTimeout(() => {
       window.location.replace("../");
     }, 3000);
@@ -154,7 +158,6 @@ document.querySelectorAll(".cell").forEach((cell) => {
       const row = parseInt(this.parentElement.dataset.row);
       const column = parseInt(this.dataset.column);
       this.innerHTML = '<p class="cell">' + "X" + "</p>";
-      xo = xo === "X" ? "O" : "X";
       socket.emit("play move", { row, column });
     }
     checkWinner();

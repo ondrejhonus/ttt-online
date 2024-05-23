@@ -2,7 +2,7 @@
   "name": "ttt-online",
   "version": "1.0.0",
   "description": "Play tic tac toe with your friend over the internet",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
