@@ -17,7 +17,10 @@
             <p class="is-size-2 has-text-danger">Online</p>
         </div>
         <div class="modes">
-            <button class="button is-large has-background-info has-text-black mt-5" onclick="onlineJoin()">Play Online</button>
+            <form class="box" action="javascript:;" onsubmit="onlineJoin()">
+                <input id="inputRoom" type="text" class="input is-medium" placeholder="Enter room name">
+                <button type="submit" class="button is-large has-background-info has-text-black mt-5">Create/Join room</button>
+            </form>
         </div>
     </main>
     <footer>
@@ -27,7 +30,7 @@
             <a href="https://ondrejhonus.com/" target="_blank"><img src="img/website.png" alt="website"></a>
         </div>
     </footer>
-    <script src="js/script.js"></script>
+    <script src="js/menu.js"></script>
 </body>
 
 </html>

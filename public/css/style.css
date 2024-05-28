@@ -1,5 +1,6 @@
 html{
     height: 100%;
+    overflow-y: auto;
 }
 
 p{
@@ -10,7 +11,7 @@ div.text{
     margin: auto;
     display: flex;
     flex-direction: column;
-    margin-top: 30vh;
+    margin-top: 20vh;
 
 }
 
@@ -41,4 +42,14 @@ div.icons img{
     border-radius: 100%;
     vertical-align: middle;
     margin: 0 .5em;
+}
+
+div.modes{
+    width: 20%;
+    display: flex;
+    margin: auto;
+    margin-top: 1em;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

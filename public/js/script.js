@@ -61,9 +61,16 @@ toggleButton.addEventListener("click", function () {
 
 // Redirect user to playing the game
 
-function onlineJoin() {
-  window.location.replace("./game");
-}
+let room;
+
+room = new URLSearchParams(window.location.search).get("room");
+socket.emit("join room", room);
+console.log(room);
+
+socket.on('hello', ()=> {
+  console.log("Hello recieved");
+  socket.emit("hello2", )
+})
 
 // Draw the playfield 
 
@@ -158,7 +165,7 @@ document.querySelectorAll(".cell").forEach((cell) => {
       const row = parseInt(this.parentElement.dataset.row);
       const column = parseInt(this.dataset.column);
       this.innerHTML = '<p class="cell">' + "X" + "</p>";
-      socket.emit("play move", { row, column });
+      socket.emit("play move", { row, column, room });
     }
     checkWinner();
   });
@@ -166,8 +173,8 @@ document.querySelectorAll(".cell").forEach((cell) => {
 
 // Get the move from the other player and draw an O
 
-socket.on("play move", (data) => {
-  const { row, column } = data;
+socket.on(`play move ${room}`, (data) => {
+  const { row, column, room } = data;
   const cell = document.querySelector(
     `.row[data-row='${row}'] .cell[data-column='${column}']`
   );

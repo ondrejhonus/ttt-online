@@ -13,6 +13,8 @@ app.set("view engine", "ejs");
 const server = createServer(app);
 const io = new Server(server);
 
+let room = 'room1';
+
 app.get('/', (req, res) => {
   res.render("index", { title: "TTT-online" });
 });
@@ -23,10 +25,18 @@ app.get('/game', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+
+  socket.on("join room", () => {
+    socket.join(room);
+    console.log('user joined room:', room);
+    io.to(room).emit("hello");
+  });
+
   socket.on('play move', (data) => {
     console.log('play move:', data);
-    socket.broadcast.emit('play move', data);
+    socket.broadcast.emit(`play move ${data.room}`, data);
   });
+
   socket.on('chat message out', (msg) => {
     socket.broadcast.emit('chat message in', msg);
   });
