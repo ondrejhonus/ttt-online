@@ -23,6 +23,10 @@ app.get('/game', (req, res) => {
   res.render("game");
 });
 
+app.get('/haha', (req, res) => {
+  res.render("haha");
+});
+
 io.on('connection', (socket) => {
   socket.on("joining room", (room) => {
     let playersInRoom = roomPlayers[room] || 0;
@@ -30,11 +34,20 @@ io.on('connection', (socket) => {
       roomPlayers[room] = playersInRoom + 1;
       console.log(`There are ${roomPlayers[room]} players in room ${room}`);
       console.log('user joined room:', room);
-      socket.emit("room joined", room);
     } else {
       socket.emit("room full", room);
     }
   });
+
+  socket.on("ask full", (room) => {
+    if (roomPlayers[room] == 2) {
+      socket.emit("room full", room);
+    }
+    else{
+      socket.emit("room joined", room);
+    }
+  });
+
   socket.on("join room", (room) => {
       socket.join(room);
   });

@@ -5,7 +5,7 @@ const socket = io();
     const room = inputRoom.value;
     let roomFull = false;
 
-    socket.emit("joining room", room);
+    socket.emit("ask full", room);
 
     socket.on("room joined", (room) => {
       if (!roomFull) {

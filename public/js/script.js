@@ -1,8 +1,11 @@
 const socket = io();
 
-// document.addEventListener('DOMContentLoaded', () => {
-
-// });
+document.addEventListener('DOMContentLoaded', () => {
+  socket.emit("joining room", room);
+  socket.on("room full", () => {
+    window.location.replace("../haha");
+  });
+});
 
 
 let winner = null;
