@@ -13,34 +13,65 @@ app.set("view engine", "ejs");
 const server = createServer(app);
 const io = new Server(server);
 
+let roomPlayers = {};
+
 app.get('/', (req, res) => {
-  res.render("index", { title: "TTT-online" });
+  res.render("menu");
 });
 
 app.get('/game', (req, res) => {
-  res.render("game", { title: "Playing" });
+  res.render("game");
 });
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
-
+  socket.on("joining room", (room) => {
+    let playersInRoom = roomPlayers[room] || 0;
+    if (playersInRoom < 2) {
+      roomPlayers[room] = playersInRoom + 1;
+      console.log(`There are ${roomPlayers[room]} players in room ${room}`);
+      console.log('user joined room:', room);
+      socket.emit("room joined", room);
+    } else {
+      socket.emit("room full", room);
+    }
+  });
   socket.on("join room", (room) => {
-    socket.join(room);
-    console.log('user joined room:', room);
-    io.to(room).emit("hello");
+      socket.join(room);
   });
 
   socket.on('play move', (data) => {
     console.log('play move:', data);
-    socket.broadcast.emit(`play move ${data.room}`, data);
+    socket.to(data.room).emit(`play move ${data.room}`, data);
   });
 
   socket.on('chat message out', (data) => {
-    socket.broadcast.emit(`chat message in ${data.room}`, data.msg);
+    socket.to(data.room).emit(`chat message in ${data.room}`, data.msg);
+  });
+
+  socket.on("leave room", (room) => {
+    console.log("user left room", room);
+
+    if (roomPlayers[room]) {
+      roomPlayers[room]--;
+      if (roomPlayers[room] === 0) {
+        delete roomPlayers[room];
+      }
+    }
+
+    socket.leave(room);
   });
 
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    for (const room of socket.rooms) {
+      if (room !== socket.id) {
+        if (roomPlayers[room]) {
+          roomPlayers[room]--;
+          if (roomPlayers[room] === 0) {
+            delete roomPlayers[room];
+          }
+        }
+      }
+    }
   });
 });
 

@@ -69,7 +69,8 @@ div.chatToggle{
     overflow-wrap: break-word;
 }
 
-input#input {
+#input {
+    resize: none;
     position: absolute;
     bottom: 0;
     left: 0;

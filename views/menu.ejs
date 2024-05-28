@@ -18,7 +18,7 @@
         </div>
         <div class="modes">
             <form class="box" action="javascript:;" onsubmit="onlineJoin()">
-                <input id="inputRoom" type="text" class="input is-medium" placeholder="Enter room name">
+                <input id="inputRoom" type="text" class="input is-medium" placeholder="Enter room name" maxlength="10" autocomplete="off" required>
                 <button type="submit" class="button is-large has-background-info has-text-black mt-5">Create/Join room</button>
             </form>
         </div>
@@ -30,6 +30,7 @@
             <a href="https://ondrejhonus.com/" target="_blank"><img src="img/website.png" alt="website"></a>
         </div>
     </footer>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="js/menu.js"></script>
 </body>
 

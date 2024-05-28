@@ -1,4 +1,10 @@
 const socket = io();
+
+// document.addEventListener('DOMContentLoaded', () => {
+
+// });
+
+
 let winner = null;
 let endOfGame = false;
 
@@ -6,6 +12,11 @@ let endOfGame = false;
 let room = new URLSearchParams(window.location.search).get("room");
 socket.emit("join room", room);
 console.log("You are in room", room);
+
+// Leave the room on page unload
+window.addEventListener("unload", function () {
+  socket.emit("leave room", room);
+});
 
 ///////////////////////////////////////////////////
 ////////////////// CHAT LOGIC //////////////////////
@@ -86,6 +97,17 @@ function fillPlayfield() {
 }
 fillPlayfield();
 
+// Handle the game end
+
+function gameEnd(){
+  document.querySelectorAll(".cell").forEach((cell) => {
+    cell.style.visibility = "hidden";
+  });
+  setTimeout(() => {
+    window.location.replace("../");
+  }, 3000);
+}
+
 
 // Check for winner
 
@@ -113,7 +135,7 @@ checkWinner = () => {
       cells[c].textContent === "X"
     ) {
       document.querySelector(".winner").innerHTML = "You won!";
-      endOfGame = true;
+      gameEnd();
       break;
     }
     else if (
@@ -122,7 +144,7 @@ checkWinner = () => {
       cells[c].textContent === "O"
     ) {
       document.querySelector(".loser").innerHTML = "You lost!";
-      endOfGame = true;
+      gameEnd();
       break;
     }
     else if (
@@ -137,16 +159,8 @@ checkWinner = () => {
       (cells[8].textContent === "X" || cells[8].textContent === "O")
     ) {
       document.querySelector(".draw").innerHTML = "It's a tie!";
-      endOfGame = true;
+      gameEnd();
     }
-  }
-  if (endOfGame) {
-    document.querySelectorAll(".cell").forEach((cell) => {
-      cell.style.visibility = "hidden";
-    });
-    setTimeout(() => {
-      window.location.replace("../");
-    }, 3000);
   }
 };
 
