@@ -2,6 +2,11 @@ const socket = io();
 let winner = null;
 let endOfGame = false;
 
+// Get the room name from URL
+let room = new URLSearchParams(window.location.search).get("room");
+socket.emit("join room", room);
+console.log("You are in room", room);
+
 ///////////////////////////////////////////////////
 ////////////////// CHAT LOGIC //////////////////////
 ///////////////////////////////////////////////////
@@ -15,7 +20,8 @@ form.addEventListener("submit", function (e) {
   if (input.value) {
     let item = document.createElement("p");
     let chatboxScroll = document.querySelector(".scroll");
-    socket.emit("chat message out", input.value);
+    const msg = input.value;
+    socket.emit("chat message out", {msg, room});
     item.classList.add("msg", "has-background-info", "is-size-6", "outgoing-message");
     item.textContent = input.value;
     messages.appendChild(item);
@@ -24,7 +30,8 @@ form.addEventListener("submit", function (e) {
   }
 });
 
-socket.on("chat message in", function (msg) {
+socket.on(`chat message in ${room}`, (msg)=> {
+  console.log("message recieved", msg);
   let item = document.createElement("p");
   let chatboxScroll = document.querySelector(".scroll");
   item.classList.add("msg", "has-background-danger", "is-size-6", "incoming-message");
@@ -55,22 +62,8 @@ toggleButton.addEventListener("click", function () {
 });
 
 ///////////////////////////////////////////////////
-////////////////// GAME LOGIC //////////////////////
+////////////////// GAME LOGIC /////////////////////
 ///////////////////////////////////////////////////
-
-
-// Redirect user to playing the game
-
-let room;
-
-room = new URLSearchParams(window.location.search).get("room");
-socket.emit("join room", room);
-console.log(room);
-
-socket.on('hello', ()=> {
-  console.log("Hello recieved");
-  socket.emit("hello2", )
-})
 
 // Draw the playfield 
 
