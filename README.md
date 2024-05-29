@@ -11,8 +11,8 @@ A web game that is you can play with your friend and chat with him at the same t
 
 ## Screenshots  
 
-<img src="screenshots/game.png" width="49%">
-<img src="screenshots/menu.png" width="49%">
+<img src="screenshots/playing.png" width="49%">
+<img src="screenshots/main-menu.png" width="49%">
 
 
 ## Tech Stack  
