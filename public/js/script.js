@@ -1,5 +1,10 @@
 const socket = io();
 
+let winner = null;
+let endOfGame = false;
+
+let room = new URLSearchParams(window.location.search).get("room");
+
 document.addEventListener('DOMContentLoaded', () => {
   socket.emit("joining room", room);
   socket.on("room full", () => {
@@ -7,23 +12,27 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
-let winner = null;
-let endOfGame = false;
-
-// Get the room name from URL
-let room = new URLSearchParams(window.location.search).get("room");
 socket.emit("join room", room);
 console.log("You are in room", room);
 
-// Leave the room on page unload
 window.addEventListener("unload", function () {
   socket.emit("leave room", room);
 });
 
+document.querySelector(".draw").innerHTML = "Waiting for opponent...";
+
+// If the other player joins the room, start the game
+
+socket.on(`game ready ${room}`, () => {
+console.log("Game ready");
+document.querySelector(".draw").innerHTML = "";
+
+
 ///////////////////////////////////////////////////
 ////////////////// CHAT LOGIC //////////////////////
 ///////////////////////////////////////////////////
+
+document.getElementById("chatButton").style.visibility = "visible";
 
 let messages = document.getElementById("messages");
 let form = document.getElementById("form");
@@ -190,4 +199,6 @@ socket.on(`play move ${room}`, (data) => {
   );
   cell.innerHTML = '<p class="cell">' + "O" + "</p>";
   checkWinner();
+});
+
 });

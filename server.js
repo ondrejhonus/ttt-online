@@ -30,11 +30,23 @@ app.get('/haha', (req, res) => {
 io.on('connection', (socket) => {
   socket.on("joining room", (room) => {
     let playersInRoom = roomPlayers[room] || 0;
-    if (playersInRoom < 2) {
+    if (playersInRoom < 1) {
       roomPlayers[room] = playersInRoom + 1;
       console.log(`There are ${roomPlayers[room]} players in room ${room}`);
       console.log('user joined room:', room);
-    } else {
+    }
+
+    else if (playersInRoom < 2) {
+      roomPlayers[room] = playersInRoom + 1;
+      console.log(`There are ${roomPlayers[room]} players in room ${room}`);
+      console.log('user joined room:', room);
+      setTimeout(() => {
+        socket.emit(`game ready ${room}`);
+        socket.broadcast.emit(`game ready ${room}`);
+      }, 1000);
+    }
+
+    else {
       socket.emit("room full", room);
     }
   });
@@ -43,13 +55,13 @@ io.on('connection', (socket) => {
     if (roomPlayers[room] == 2) {
       socket.emit("room full", room);
     }
-    else{
+    else {
       socket.emit("room joined", room);
     }
   });
 
   socket.on("join room", (room) => {
-      socket.join(room);
+    socket.join(room);
   });
 
   socket.on('play move', (data) => {
