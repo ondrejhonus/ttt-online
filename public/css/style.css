@@ -12,7 +12,6 @@ div.text{
     display: flex;
     flex-direction: column;
     margin-top: 20vh;
-
 }
 
 footer{
@@ -45,13 +44,18 @@ div.icons img{
 }
 
 div.modes{
-    width: 25%;
+    width: 25em;
+    height: 12em;
     display: flex;
     margin: auto;
     margin-top: 1em;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+div.modes input, div.modes button{
+    width: 90%;
 }
 
 .hahaDiv{
@@ -62,5 +66,4 @@ div.modes{
     align-items: center;
     justify-content: center;
     margin-top: 10em;
-
 }

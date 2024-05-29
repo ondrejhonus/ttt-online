@@ -42,6 +42,7 @@ div.chatbox {
     z-index: 1;
     position: absolute;
     margin: .5em;
+    margin-bottom: 1.2em;
     visibility: hidden;
 }
 
@@ -84,8 +85,6 @@ button.send {
     width: 6em;
 }
 
-
-
 ::-webkit-scrollbar {
     width: 10px
 }
@@ -104,8 +103,8 @@ button.send {
 
 .turn{
     text-align: center;
-    margin-top: .8em;
-    font-size: 30px;
+    margin-top: 2em;
+    font-size: 6vh;
 }
 
 .waiting{
@@ -113,7 +112,7 @@ button.send {
     width: 100%;
     text-align: center;
     margin-top: 3.5em;
-    font-size: 40px;
+    font-size: 7vh;
 }
 
 .redirecting{
