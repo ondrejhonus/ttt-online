@@ -1,6 +1,6 @@
 
 # Tic Tac Toe online
-A web game that is you can play with your friend and chat with him at the same time.
+A web tic tac toe, that you can play with your friend, and chat with him at the same time.
 
 # Table of contents  
 1. [Introduction](#introduction)  
