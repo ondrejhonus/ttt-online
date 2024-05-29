@@ -7,7 +7,7 @@ div.playfield {
     vertical-align: middle;
     text-align: center;
     width: 100%;
-    margin-top: 10em;
+    margin-top: 6em;
 }
 
 .status-win{
@@ -100,4 +100,24 @@ button.send {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555
+}
+
+.turn{
+    text-align: center;
+    margin-top: .8em;
+    font-size: 30px;
+}
+
+.waiting{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    margin-top: 3.5em;
+    font-size: 40px;
+}
+
+.redirecting{
+    position: absolute;
+    top: 0;
+    left: 0;
 }

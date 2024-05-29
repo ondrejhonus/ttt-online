@@ -43,6 +43,9 @@ io.on('connection', (socket) => {
       setTimeout(() => {
         socket.emit(`game ready ${room}`);
         socket.broadcast.emit(`game ready ${room}`);
+        socket.emit(`not your turn ${room}`);
+        socket.broadcast.emit(`your turn ${room}`);
+
       }, 1000);
     }
 
@@ -67,6 +70,9 @@ io.on('connection', (socket) => {
   socket.on('play move', (data) => {
     console.log('play move:', data);
     socket.to(data.room).emit(`play move ${data.room}`, data);
+    socket.broadcast.emit(`your turn ${data.room}`);
+    socket.emit(`not your turn ${data.room}`);
+
   });
 
   socket.on('chat message out', (data) => {
@@ -75,7 +81,7 @@ io.on('connection', (socket) => {
 
   socket.on("leave room", (room) => {
     console.log("user left room", room);
-
+    socket.broadcast.emit(`opponent left ${room}`);
     if (roomPlayers[room]) {
       roomPlayers[room]--;
       if (roomPlayers[room] === 0) {
