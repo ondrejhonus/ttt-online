@@ -29,19 +29,26 @@ socket.on(`game ready ${room}`, () => {
 
   let myTurn = false;
 
-  socket.on(`your turn ${room}`, () => {
-    myTurn = true;
-    document.querySelector(".myTurn").innerHTML = "It's your turn!";
-    document.querySelector(".opponentTurn").innerHTML = "";
-    console.log("It's your turn");
-  });
+  if (!endOfGame) {
 
-  socket.on(`not your turn ${room}`, () => {
-    myTurn = false;
-    document.querySelector(".myTurn").innerHTML = "";
-    document.querySelector(".opponentTurn").innerHTML = "It's your opponent's turn!";
-    console.log("It's not your turn");
-  });
+    socket.on(`your turn ${room}`, () => {
+      myTurn = true;
+      document.querySelector(".myTurn").innerHTML = "It's your turn!";
+      document.querySelector(".opponentTurn").innerHTML = "";
+      console.log("It's your turn");
+    });
+
+    socket.on(`not your turn ${room}`, () => {
+      myTurn = false;
+      document.querySelector(".myTurn").innerHTML = "";
+      document.querySelector(".opponentTurn").innerHTML = "It's your opponent's turn!";
+      console.log("It's not your turn");
+    });
+
+  } else {
+    document.querySelector(".myTurn").style.visibility = "hidden";
+    document.querySelector(".opponentTurn").style.visibility = "hidden";
+  }
 
   socket.on(`opponent left ${room}`, () => {
     document.querySelector(".loser").innerHTML = "Your opponent left the game!";
@@ -140,6 +147,8 @@ socket.on(`game ready ${room}`, () => {
       cell.style.visibility = "hidden";
     });
     document.querySelector(".redirecting").innerHTML = "Redirecting you to the main page...";
+    document.querySelector(".myTurn").style.visibility = "hidden";
+    document.querySelector(".opponentTurn").style.visibility = "hidden";
     setTimeout(() => {
       window.location.replace("../");
     }, 3000);
@@ -170,7 +179,8 @@ socket.on(`game ready ${room}`, () => {
         cells[b].textContent === "X" &&
         cells[c].textContent === "X"
       ) {
-        if(!endOfGame){
+        if (!endOfGame) {
+          endOfGame = true;
           document.querySelector(".winner").innerHTML = "You won!";
           gameEnd();
         }
@@ -179,9 +189,10 @@ socket.on(`game ready ${room}`, () => {
         cells[b].textContent === "O" &&
         cells[c].textContent === "O"
       ) {
-        if(!endOfGame){
-        document.querySelector(".loser").innerHTML = "You lost!";
-        gameEnd();
+        if (!endOfGame) {
+          endOfGame = true;
+          document.querySelector(".loser").innerHTML = "You lost!";
+          gameEnd();
         }
       } else if (
         (cells[0].textContent === "X" || cells[0].textContent === "O") &&
@@ -194,9 +205,10 @@ socket.on(`game ready ${room}`, () => {
         (cells[7].textContent === "X" || cells[7].textContent === "O") &&
         (cells[8].textContent === "X" || cells[8].textContent === "O")
       ) {
-        if(!endOfGame){
-        document.querySelector(".draw").innerHTML = "It's a tie!";
-        gameEnd();
+        if (!endOfGame) {
+          endOfGame = true;
+          document.querySelector(".draw").innerHTML = "It's a tie!";
+          gameEnd();
         }
       }
     }
