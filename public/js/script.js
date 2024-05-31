@@ -183,6 +183,7 @@ socket.on(`game ready ${room}`, () => {
           endOfGame = true;
           document.querySelector(".winner").innerHTML = "You won!";
           gameEnd();
+          break;
         }
       } else if (
         cells[a].textContent === "O" &&
@@ -193,6 +194,7 @@ socket.on(`game ready ${room}`, () => {
           endOfGame = true;
           document.querySelector(".loser").innerHTML = "You lost!";
           gameEnd();
+          break;
         }
       } else if (
         (cells[0].textContent === "X" || cells[0].textContent === "O") &&
@@ -209,6 +211,7 @@ socket.on(`game ready ${room}`, () => {
           endOfGame = true;
           document.querySelector(".draw").innerHTML = "It's a tie!";
           gameEnd();
+          break;
         }
       }
     }
@@ -223,7 +226,7 @@ socket.on(`game ready ${room}`, () => {
         const column = parseInt(this.dataset.column);
         this.innerHTML = '<p class="cell">' + "X" + "</p>";
         socket.emit("play move", { row, column, room });
-        myTurn = false; // After making a move, it's no longer this player's turn
+        myTurn = false; 
       }
       checkWinner();
     });
